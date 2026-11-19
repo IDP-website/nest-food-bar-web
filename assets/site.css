@@ -256,3 +256,19 @@ h2 em,h3 em{font-style:normal;font-weight:300;color:var(--blush)}
 
 /* sunset sits on a red-orange sky, so its accents go cream */
 .sunset .kicker,.sunset h2 em,.sunset .num,.sunclock b{color:#FFE7D6}
+
+/* menu board with prices */
+.board ul{gap:20px 44px}
+.board li .row{display:flex;align-items:baseline;gap:10px}
+.board li .row b{flex:1;min-width:0}
+.board .pr{font-style:normal;font-family:var(--f-d);font-weight:600;font-size:17px;color:var(--cream);font-variant-numeric:tabular-nums}
+.board .veg{font-style:normal;font-family:var(--f-b);font-weight:500;font-size:12px;color:#A9D99A;margin-left:2px}
+.board .star{color:var(--red);font-size:14px;vertical-align:2px}
+.board li span{display:block;margin-top:3px}
+.board dl{margin-top:8px;display:grid;gap:4px}
+.board dl div{display:flex;align-items:baseline;gap:8px;font-size:14px;color:rgba(241,230,211,.8)}
+.board dl div::after{content:"";order:1;flex:1;border-bottom:1px dotted rgba(241,230,211,.25);transform:translateY(-4px)}
+.board dt{order:0}.board dd{order:2;font-weight:600;color:var(--cream);font-variant-numeric:tabular-nums}
+.board .bnote{text-align:center;font-size:14px;color:var(--muted);max-width:520px;margin:-14px auto 26px}
+.board .legend{margin-top:30px;text-align:center;font-size:12.5px;letter-spacing:.06em;color:var(--muted)}
+.board li span.star{display:inline;margin:0 0 0 2px}
