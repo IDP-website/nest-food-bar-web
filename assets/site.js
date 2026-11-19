@@ -16,11 +16,11 @@ let ticking=false;
 function frame(){ticking=false;
   const vh=innerHeight,y=scrollY;
   const dh=door.offsetHeight-vh;const p=RM?0:clamp(y/dh);
-  stage.style.setProperty('--p',p.toFixed(4));
+  if(p!==frame.last){stage.style.setProperty('--p',p.toFixed(3));frame.last=p}
   const past=y>door.offsetHeight-vh*0.6;
   nav.classList.toggle('solid',past||p>.22);rail.classList.toggle('show',past||p>.65);
   if(sunset){const r=sunset.getBoundingClientRect();sunset.style.setProperty('--s',clamp((vh-r.top)/(r.height+vh)).toFixed(3))}
-  if(!RM)for(const el of par){const r=el.getBoundingClientRect();const c=(r.top+r.height/2-vh/2);el.style.translate=`0 ${(c*+el.dataset.parallax).toFixed(1)}px`}
+  if(!RM)for(const el of par){const r=el.getBoundingClientRect();if(r.bottom<-200||r.top>vh+200)continue;const c=(r.top+r.height/2-vh/2);el.style.translate=`0 ${(c*+el.dataset.parallax).toFixed(1)}px`}
 }
 addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(frame)}},{passive:true});
 addEventListener('resize',frame);frame();
@@ -28,14 +28,11 @@ addEventListener('resize',frame);frame();
 /* lights on */
 setTimeout(()=>{door.classList.add('lit');stage.style.setProperty('--lit',1)},RM?0:250);
 
-/* dust in the light */
-(function(){const c=$('.dust');if(!c||RM)return;const x=c.getContext('2d');let W,H,P=[];
-  const size=()=>{const r=devicePixelRatio>1?1.5:1;W=c.width=c.offsetWidth*r;H=c.height=c.offsetHeight*r;P=Array.from({length:Math.round(W*H/16000)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.6+.3,vx:(Math.random()-.5)*.12,vy:-Math.random()*.18-.02,a:Math.random()*.6+.15,t:Math.random()*6}))};
-  size();addEventListener('resize',size);
-  let vis=true;new IntersectionObserver(e=>vis=e[0].isIntersecting).observe(c);
-  (function loop(){if(vis){x.clearRect(0,0,W,H);for(const d of P){d.t+=.01;d.x+=d.vx+Math.sin(d.t)*.08;d.y+=d.vy;if(d.y<-5){d.y=H+5;d.x=Math.random()*W}if(d.x<-5)d.x=W+5;if(d.x>W+5)d.x=-5;
-    const g=x.createRadialGradient(d.x,d.y,0,d.x,d.y,d.r*3);g.addColorStop(0,`rgba(255,214,150,${d.a})`);g.addColorStop(1,'rgba(255,190,110,0)');x.fillStyle=g;x.beginPath();x.arc(d.x,d.y,d.r*3,0,7);x.fill()}}
-    requestAnimationFrame(loop)})()})();
+/* dust in the light: a few motes the graphics card animates on its own */
+(function(){const c=$('.dust');if(!c||RM)return;const n=innerWidth<700?14:26;let h='';
+  for(let i=0;i<n;i++){const sz=(Math.random()*4+2).toFixed(1),dur=(14+Math.random()*16).toFixed(1),del=(-Math.random()*30).toFixed(1),dx=((Math.random()-.5)*120).toFixed(0);
+    h+=`<i style="left:${(Math.random()*100).toFixed(1)}%;width:${sz}px;height:${sz}px;--dx:${dx}px;animation-duration:${dur}s;animation-delay:${del}s;opacity:${(Math.random()*.5+.25).toFixed(2)}"></i>`}
+  c.innerHTML=h})();
 
 /* rail: where am I */
 const items=$$('.rail li');
