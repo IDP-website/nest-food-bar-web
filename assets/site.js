@@ -9,7 +9,8 @@ function sast(){const p=new Intl.DateTimeFormat('en-GB',{timeZone:'Africa/Johann
 const T=sast();
 
 /* the door: scroll progress */
-const door=$('.door'),stage=$('.door-stage'),nav=$('#nav'),rail=$('.rail'),sunset=$('.sunset');
+document.documentElement.classList.add('js');
+const door=$('.hero'),stage=$('.stage'),nav=$('#nav'),rail=$('.rail'),sunset=$('.sunset');
 const par=$$('[data-parallax]');
 let ticking=false;
 function frame(){ticking=false;
@@ -24,10 +25,22 @@ function frame(){ticking=false;
 addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(frame)}},{passive:true});
 addEventListener('resize',frame);frame();
 
+/* lights on */
+setTimeout(()=>{door.classList.add('lit');stage.style.setProperty('--lit',1)},RM?0:250);
+
+/* dust in the light */
+(function(){const c=$('.dust');if(!c||RM)return;const x=c.getContext('2d');let W,H,P=[];
+  const size=()=>{const r=devicePixelRatio>1?1.5:1;W=c.width=c.offsetWidth*r;H=c.height=c.offsetHeight*r;P=Array.from({length:Math.round(W*H/16000)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.6+.3,vx:(Math.random()-.5)*.12,vy:-Math.random()*.18-.02,a:Math.random()*.6+.15,t:Math.random()*6}))};
+  size();addEventListener('resize',size);
+  let vis=true;new IntersectionObserver(e=>vis=e[0].isIntersecting).observe(c);
+  (function loop(){if(vis){x.clearRect(0,0,W,H);for(const d of P){d.t+=.01;d.x+=d.vx+Math.sin(d.t)*.08;d.y+=d.vy;if(d.y<-5){d.y=H+5;d.x=Math.random()*W}if(d.x<-5)d.x=W+5;if(d.x>W+5)d.x=-5;
+    const g=x.createRadialGradient(d.x,d.y,0,d.x,d.y,d.r*3);g.addColorStop(0,`rgba(255,214,150,${d.a})`);g.addColorStop(1,'rgba(255,190,110,0)');x.fillStyle=g;x.beginPath();x.arc(d.x,d.y,d.r*3,0,7);x.fill()}}
+    requestAnimationFrame(loop)})()})();
+
 /* rail: where am I */
 const items=$$('.rail li');
 const io=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting){items.forEach(li=>li.classList.toggle('on',li.dataset.for===e.target.id));
-  rail.classList.toggle('dark',['week','sunset','top'].includes(e.target.id))}},{rootMargin:'-45% 0px -50% 0px'});
+}},{rootMargin:'-45% 0px -50% 0px'});
 items.forEach(li=>{const s=document.getElementById(li.dataset.for);s&&io.observe(s)});
 items.forEach(li=>li.addEventListener('click',()=>document.getElementById(li.dataset.for)?.scrollIntoView({behavior:RM?'auto':'smooth'})));
 rail.style.pointerEvents='auto';
