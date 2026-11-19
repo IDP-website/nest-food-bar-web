@@ -8,31 +8,31 @@ function sast(){const p=new Intl.DateTimeFormat('en-GB',{timeZone:'Africa/Johann
   return{wd:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].indexOf(g('weekday')),h:(+g('hour')%24)+(+g('minute'))/60,y:+g('year'),m:+g('month'),d:+g('day')}}
 const T=sast();
 
-/* the door: scroll progress */
+/* the photo wall: every column has its own photos, so nothing repeats on screen */
 document.documentElement.classList.add('js');
-const door=$('.hero'),stage=$('.stage'),nav=$('#nav'),rail=$('.rail'),sunset=$('.sunset');
+const hero=$('.hero'),nav=$('#nav'),rail=$('.rail'),sunset=$('.sunset');
+const WALL=['w13','w18','w25','w22','inside-lights','w38','w29','w20','w17','sunset-mussels','w32','w30','w16','w36','long-table','w26','w40','w21','lagoon-deck','w23','w15','w35','w27','mussel-pot','w39','w31','w24','kitchen-hands','w37','w28','latte','w19','w34','w14'];
+function buildWall(){const el=$('#wall');const vw=innerWidth,vh=hero.offsetHeight;
+  let cols=vw<700?3:vw<1100?4:5;
+  for(;cols>2;cols--){const colW=(vw*(vw<700?1.28:1.12))/cols,tileH=colW*1.25+14,showing=Math.ceil(vh*1.3/tileH)+1;if(Math.floor(WALL.length/cols)>showing)break}
+  const rings=Array.from({length:cols},()=>[]);WALL.forEach((n,i)=>rings[i%cols].push(n));
+  el.style.setProperty('--cols',cols);
+  el.innerHTML=rings.map((r,i)=>{const imgs=r.map((n,k)=>`<img src="/assets/img/wall/${n}.jpg" alt="" ${k>3?'loading="lazy"':''} decoding="async">`).join('');
+    return `<div class="col${i%2?' down':''}" style="--dur:${60+i*9}s;animation-delay:-${i*11}s">${imgs}${imgs}</div>`}).join('')}
+buildWall();let rw;addEventListener('resize',()=>{clearTimeout(rw);rw=setTimeout(()=>{const c=+$('#wall').style.getPropertyValue('--cols');buildWall()},300)});
+new IntersectionObserver(e=>hero.classList.toggle('paused',!e[0].isIntersecting)).observe(hero);
+
 const par=$$('[data-parallax]');
 let ticking=false;
 function frame(){ticking=false;
   const vh=innerHeight,y=scrollY;
-  const dh=door.offsetHeight-vh;const p=RM?0:clamp(y/dh);
-  if(p!==frame.last){stage.style.setProperty('--p',p.toFixed(3));frame.last=p}
-  const past=y>door.offsetHeight-vh*0.6;
-  nav.classList.toggle('solid',past||p>.22);rail.classList.toggle('show',past||p>.65);
+  const past=y>hero.offsetHeight-90;
+  nav.classList.toggle('solid',past);rail.classList.toggle('show',y>hero.offsetHeight*.6);
   if(sunset){const r=sunset.getBoundingClientRect();sunset.style.setProperty('--s',clamp((vh-r.top)/(r.height+vh)).toFixed(3))}
   if(!RM)for(const el of par){const r=el.getBoundingClientRect();if(r.bottom<-200||r.top>vh+200)continue;const c=(r.top+r.height/2-vh/2);el.style.translate=`0 ${(c*+el.dataset.parallax).toFixed(1)}px`}
 }
 addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(frame)}},{passive:true});
 addEventListener('resize',frame);frame();
-
-/* lights on */
-setTimeout(()=>{door.classList.add('lit');stage.style.setProperty('--lit',1)},RM?0:250);
-
-/* dust in the light: a few motes the graphics card animates on its own */
-(function(){const c=$('.dust');if(!c||RM)return;const n=innerWidth<700?14:26;let h='';
-  for(let i=0;i<n;i++){const sz=(Math.random()*4+2).toFixed(1),dur=(14+Math.random()*16).toFixed(1),del=(-Math.random()*30).toFixed(1),dx=((Math.random()-.5)*120).toFixed(0);
-    h+=`<i style="left:${(Math.random()*100).toFixed(1)}%;width:${sz}px;height:${sz}px;--dx:${dx}px;animation-duration:${dur}s;animation-delay:${del}s;opacity:${(Math.random()*.5+.25).toFixed(2)}"></i>`}
-  c.innerHTML=h})();
 
 /* rail: where am I */
 const items=$$('.rail li');
