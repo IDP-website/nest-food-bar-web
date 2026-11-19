@@ -70,9 +70,8 @@ p+p{margin-top:14px}
 .scene{position:absolute;inset:-4%;will-change:transform,opacity;backface-visibility:hidden}
 .scene img{width:100%;height:100%;object-fit:cover}
 .s1{transform:scale(calc(1.08 + var(--p)*.5));opacity:calc(1 - max(0, var(--p) - .45)*2.6)}
-.s2a{transform:scale(calc(1.25 - max(0, var(--p) - .4)*.3));opacity:calc(max(0, var(--p) - .38)*2.6)}
-.s2b{transform:scale(calc(1.25 - max(0, var(--p) - .4)*.3));opacity:calc(max(0, var(--p) - .55)*3.4)}
-.dark{position:absolute;inset:0;background:#050403;opacity:calc(1 - var(--lit,0)*.9 + var(--p)*.25);transition:opacity 1.8s ease;will-change:opacity}
+.s2b{transform:scale(calc(1.25 - max(0, var(--p) - .4)*.3));opacity:calc(max(0, var(--p) - .4)*2.6)}
+.dark{position:absolute;inset:0;background:#050403;opacity:calc(1 - var(--lit,0)*.97 + var(--p)*.2);transition:opacity 1.8s ease;will-change:opacity}
 .dust{position:absolute;inset:0;overflow:hidden;opacity:calc(var(--lit,0)*(1 - var(--p)*.6));transition:opacity 2s;pointer-events:none}
 .dust i{position:absolute;bottom:-10px;border-radius:50%;background:radial-gradient(circle,rgba(255,224,170,1) 0,rgba(255,190,110,0) 70%);animation:mote linear infinite;will-change:transform}
 @keyframes mote{from{transform:translate3d(0,0,0)}to{transform:translate3d(var(--dx),-110vh,0)}}
@@ -80,17 +79,18 @@ p+p{margin-top:14px}
 .welcome p{font-family:var(--f-d);font-style:italic;font-size:clamp(44px,7vw,104px);line-height:1;color:var(--cream);text-shadow:0 0 50px rgba(255,180,90,.35),0 4px 30px rgba(0,0,0,.6)}
 .welcome small{display:block;margin-top:18px;font-size:12px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--amber-2)}
 .veil{position:absolute;inset:0;background:
-  radial-gradient(ellipse 70% 60% at 50% 45%,transparent 0%,rgba(5,4,3,.35) 60%,rgba(5,4,3,.9) 100%),
-  linear-gradient(180deg,rgba(5,4,3,.7) 0%,transparent 22%,transparent 60%,rgba(15,13,11,1) 100%)}
+  linear-gradient(90deg,rgba(5,4,3,.72) 0%,rgba(5,4,3,.45) 38%,rgba(5,4,3,.05) 70%,transparent 100%),
+  radial-gradient(ellipse 85% 75% at 60% 45%,transparent 0%,rgba(5,4,3,.2) 65%,rgba(5,4,3,.75) 100%),
+  linear-gradient(180deg,rgba(5,4,3,.55) 0%,transparent 18%,transparent 70%,rgba(15,13,11,1) 100%)}
+@media (max-width:640px){.veil{background:linear-gradient(180deg,rgba(5,4,3,.55) 0%,transparent 20%,rgba(5,4,3,.35) 50%,rgba(5,4,3,.85) 82%,rgba(15,13,11,1) 100%)}}
 .stage::after{content:"";position:absolute;inset:0;background:var(--bg);opacity:calc((var(--p) - .88)*8.4);pointer-events:none}
 /* pendant bulbs */
 .bulbs{position:absolute;inset:0;transform:translateY(calc(var(--p)*-38vh));pointer-events:none}
-.bulb{position:absolute;left:var(--x);top:0;width:2px;height:var(--l);background:linear-gradient(#000,#3a2a1c);transform-origin:top center;animation:swing 7s ease-in-out infinite alternate;animation-delay:calc(var(--d)*-4);will-change:transform}
-.bulb::before{content:"";position:absolute;left:50%;bottom:-6px;width:14px;height:10px;transform:translateX(-50%) scale(var(--s));background:#2A1E14;border-radius:3px 3px 1px 1px;z-index:1}
-.bulb::after{content:"";position:absolute;left:50%;top:calc(100% - 64px);width:160px;height:160px;margin-left:-80px;transform:scale(var(--s));
-  background:url(/assets/img/glow.png) center/100% 100% no-repeat,radial-gradient(ellipse 13px 18px at 50% 56%,#FFF6DA 0 30%,#FFD58A 60%,rgba(255,200,120,0) 100%);
-  opacity:0;animation:on .9s steps(1) var(--d) forwards}
-.hero.lit .bulb::after{opacity:1}
+.bulb{position:absolute;left:var(--x);top:0;width:3px;height:var(--l);background:linear-gradient(90deg,#000,#2b2520 50%,#000);transform-origin:top center;animation:swing 7s ease-in-out infinite alternate;animation-delay:calc(var(--d)*-4);will-change:transform;z-index:1}
+.bulb b{position:absolute;left:50%;top:100%;width:calc(60px*var(--s));height:calc(128px*var(--s));margin-left:calc(-30px*var(--s));background:url(/assets/img/bulb-off.png) center top/100% 100% no-repeat;z-index:2}
+.bulb b::after{content:"";position:absolute;inset:0;background:url(/assets/img/bulb.png) center top/100% 100% no-repeat;opacity:0;animation:on .9s steps(1) var(--d) forwards}
+.bulb::after{content:"";position:absolute;left:50%;top:calc(100% + 78px*var(--s));width:calc(300px*var(--s));height:calc(300px*var(--s));margin:calc(-150px*var(--s)) 0 0 calc(-150px*var(--s));background:url(/assets/img/glow.png) center/100% 100% no-repeat;z-index:1;opacity:0;animation:onglow .9s steps(1) var(--d) forwards;pointer-events:none}
+@keyframes onglow{0%{opacity:0}20%{opacity:.7}30%{opacity:.05}45%{opacity:1}55%{opacity:.35}70%,100%{opacity:1}}
 @keyframes on{0%{opacity:0}20%{opacity:.8}30%{opacity:.1}45%{opacity:1}55%{opacity:.4}70%,100%{opacity:1}}
 @keyframes swing{from{transform:rotate(-1.6deg)}to{transform:rotate(1.6deg)}}
 .hero-copy{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 max(24px,env(safe-area-inset-right,0px)) clamp(90px,15vh,150px) max(24px,env(safe-area-inset-left,0px));max-width:1160px;margin:0 auto;opacity:calc(1 - var(--p)*2.6);transform:translateY(calc(var(--p)*-80px));z-index:3}
@@ -107,7 +107,7 @@ p+p{margin-top:14px}
 @media (max-width:640px){
   .hero-copy{padding-bottom:110px}
   .hero h1{gap:8px;flex-direction:column;align-items:flex-start}
-  .bulb::after{width:120px;height:120px;margin-left:-60px;top:calc(100% - 48px)}
+  .bulb{--s:.72!important}
   .hint{writing-mode:horizontal-tb;left:0;right:0;justify-content:center}
 }
 
@@ -242,7 +242,7 @@ p+p{margin-top:14px}
   html{scroll-behavior:auto}
   .js .reveal:not(.in){opacity:1;transform:none}
   .hero{height:auto}.stage{position:relative}
-  .bulb,.bulb::after{animation:none!important;opacity:1}
+  .bulb,.bulb::after,.bulb b::after{animation:none!important;opacity:1}
   .hero-copy .kicker,.hero h1 .mark.big,.hero h1 .fb,.lede,.hero-cta{animation:none;opacity:1}
   .hint i{animation:none}
 }
