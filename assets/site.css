@@ -9,14 +9,14 @@
 @font-face{font-family:"DM Sans";src:url(/assets/fonts/dm-sans-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
 @font-face{font-family:"DM Sans";src:url(/assets/fonts/dm-sans-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
 
-/* Nest after dark: smoked timber, amber light, lagoon navy, a little coral from the logo */
+/* Nest after dark: brand coral red (Pantone 2034C), navy (534C) and cream on smoked timber */
 :root{
   color-scheme:dark;
   --bg:#0F0D0B;--bg-2:#17130F;--bg-3:#201A15;--card:#241D17;
   --cream:#F1E6D3;--muted:rgba(241,230,211,.66);--line:rgba(241,230,211,.12);
-  --amber:#E8A54B;--amber-2:#FFD08A;--coral:#E07A78;--coral-d:#C4555A;
-  --lagoon:#16202E;--wood:#7A4A26;--print:#EDE3D2;--ink:#1D1813;
-  --f-d:"Montserrat","Century Gothic",system-ui,sans-serif;--f-b:"DM Sans",system-ui,sans-serif;--f-s:"Cormorant Garamond","Garamond",Georgia,serif;--f-h:"Cormorant Garamond",Georgia,serif;--blush:#ECA899;
+  --amber:#E03C3B;--amber-2:#F2847E;--coral:#E03C3B;--coral-d:#C22F2E;--red:#E03C3B;--red-light:#F2847E;--navy:#1B365D;
+  --lagoon:#13223A;--wood:#7A4A26;--print:#EDE3D2;--ink:#1D1813;
+  --f-d:"Montserrat","Century Gothic",system-ui,sans-serif;--f-b:"DM Sans",system-ui,sans-serif;--f-s:"Cormorant Garamond","Garamond",Georgia,serif;--f-h:"Cormorant Garamond",Georgia,serif;--blush:#F2847E;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;overflow-x:clip;background:var(--bg)}
@@ -39,8 +39,8 @@ p+p{margin-top:14px}
 .num{font-family:var(--f-h);font-size:30px;color:var(--amber);line-height:1;margin-bottom:6px;opacity:.85}
 .muted{color:var(--muted)}
 .mark{font-family:var(--f-d);font-weight:900;letter-spacing:-.04em;line-height:.8}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--amber);color:var(--ink);font-weight:700;text-decoration:none;padding:14px 26px;border-radius:999px;border:1.5px solid var(--amber);transition:transform .2s,background .2s,box-shadow .3s;font-size:15.5px}
-.btn:hover{transform:translateY(-2px);background:var(--amber-2);border-color:var(--amber-2);box-shadow:0 10px 30px -8px rgba(232,165,75,.55)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--red);color:#FFF6EE;font-weight:700;text-decoration:none;padding:14px 26px;border-radius:999px;border:1.5px solid var(--amber);transition:transform .2s,background .2s,box-shadow .3s;font-size:15.5px}
+.btn:hover{transform:translateY(-2px);background:var(--coral-d);border-color:var(--coral-d);box-shadow:0 10px 30px -8px rgba(224,60,59,.6)}
 .btn-ghost{background:rgba(15,13,11,.45);color:var(--cream);border-color:rgba(241,230,211,.5)}
 .btn-ghost:hover{background:var(--cream);color:var(--ink);border-color:var(--cream);box-shadow:none}
 .btn-sm{padding:9px 18px;font-size:14px}
@@ -62,7 +62,7 @@ p+p{margin-top:14px}
 .rail li i{width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;transition:all .3s;position:relative}
 .rail li:not(:last-child) i::after{content:"";position:absolute;left:50%;top:8px;width:1px;height:20px;background:var(--line);transform:translateX(-50%)}
 .rail li span{opacity:0;transform:translateX(-6px);transition:all .3s}
-.rail li.on{color:var(--amber)}.rail li.on i{background:var(--amber);border-color:var(--amber);box-shadow:0 0 12px 2px rgba(232,165,75,.6)}
+.rail li.on{color:var(--amber)}.rail li.on i{background:var(--amber);border-color:var(--amber);box-shadow:0 0 12px 2px rgba(224,60,59,.6)}
 .rail li.on span,.rail:hover li span{opacity:1;transform:none}
 @media (max-width:1180px){.rail{display:none}}
 
@@ -133,7 +133,7 @@ p+p{margin-top:14px}
 .day{border:1px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center;font-size:13px;min-height:100px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;gap:6px;background:rgba(241,230,211,.03)}
 .day b{font-family:var(--f-d);font-weight:600;font-size:18px}
 .day span{color:var(--muted);line-height:1.3}
-.day.hot{background:linear-gradient(180deg,rgba(232,165,75,.25),rgba(232,165,75,.08));border-color:var(--amber)}.day.hot span{color:var(--amber-2);font-weight:700}
+.day.hot{background:linear-gradient(180deg,rgba(224,60,59,.22),rgba(224,60,59,.06));border-color:var(--amber)}.day.hot span{color:var(--amber-2);font-weight:700}
 .day.today{box-shadow:0 0 0 2px var(--coral)}
 .day.today::after{content:"today";font-family:var(--f-h);font-size:18px;color:var(--coral);line-height:1;margin-top:-2px}
 @media (max-width:640px){.days{gap:4px}.day{padding:10px 2px;min-height:86px;font-size:10.5px}.day b{font-size:14px}}
@@ -177,7 +177,7 @@ p+p{margin-top:14px}
 
 /* functions */
 .functions{background:var(--bg);padding:clamp(60px,9vw,110px) 0}
-.fn{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center;background:linear-gradient(135deg,#231B14,#17120E);border-radius:28px;padding:clamp(28px,5vw,56px);border:1px solid rgba(232,165,75,.28)}
+.fn{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center;background:linear-gradient(135deg,#231B14,#17120E);border-radius:28px;padding:clamp(28px,5vw,56px);border:1px solid rgba(224,60,59,.3)}
 .fn > *{min-width:0}
 .fn h2{font-size:clamp(28px,3.4vw,42px)}
 .fn p{color:var(--muted)}
@@ -253,3 +253,6 @@ h2 em,h3 em{font-style:normal;font-weight:300;color:var(--blush)}
 
 @media (max-width:820px){.snap::before{width:80px;height:24px;top:-11px}.stack{max-width:460px;margin:0 auto 10px}}
 }
+
+/* sunset sits on a red-orange sky, so its accents go cream */
+.sunset .kicker,.sunset h2 em,.sunset .num,.sunclock b{color:#FFE7D6}
