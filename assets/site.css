@@ -272,3 +272,10 @@ h2 em,h3 em{font-style:normal;font-weight:300;color:var(--blush)}
 .board .bnote{text-align:center;font-size:14px;color:var(--muted);max-width:520px;margin:-14px auto 26px}
 .board .legend{margin-top:30px;text-align:center;font-size:12.5px;letter-spacing:.06em;color:var(--muted)}
 .board li span.star{display:inline;margin:0 0 0 2px}
+/* menu sections + hours */
+.board li.sec{grid-column:1/-1;font-family:var(--f-s);font-weight:600;font-size:15px;letter-spacing:.24em;text-transform:uppercase;color:var(--blush);border-bottom:1px solid rgba(241,230,211,.18);padding-bottom:8px;margin-top:10px}
+.board li.sec:first-child{margin-top:0}
+.board .pr{white-space:nowrap}
+.hours .hrs-big{font-family:var(--f-d);font-weight:600;font-size:clamp(26px,3.4vw,34px);letter-spacing:.04em;color:var(--cream);margin:2px 0 4px}
+.hours .hrs-sub{color:var(--muted);font-size:14.5px;margin-bottom:14px}
+.tabs{flex-wrap:wrap;justify-content:center}
